@@ -1,0 +1,29 @@
+apiVersion: skaffold/v2beta29 
+kind: Config
+build:
+  artifacts:
+    - image: skaffold-init/go
+      context: .
+      docker:
+        dockerfile: container/Dockerfile
+profiles:
+  - name: "local"
+    activation:
+      - env: "DEPLOY_ENV=local"
+    deploy:
+      kubeContext: "kind-local"
+  - name: "dev"
+    activation:
+      - env: "DEPLOY_ENV=dev"
+    deploy:
+      kubeContext: "dev-context"
+  - name: "staging"
+    activation:
+      - env: "DEPLOY_ENV=staging"
+    deploy:
+      kubeContext: "staging-context"
+  - name: "production"
+    activation:
+      - env: "DEPLOY_ENV=production"
+    deploy:
+      kubeContext: "production-context"
