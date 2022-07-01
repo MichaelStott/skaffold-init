@@ -1,3 +1,3 @@
 # Skaffold Init - Go
 
-Skeleton project for Go microservice using Gin framework.
+Skeleton project for Go microservice.
