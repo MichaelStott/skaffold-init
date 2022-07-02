@@ -1,5 +1,5 @@
 
-DEPLOY_ENV?=local
+DEPLOY_ENV ?= local
 
 cluster: ## Provision a local k8s cluster for development.
 	kind create cluster --name local-k8s

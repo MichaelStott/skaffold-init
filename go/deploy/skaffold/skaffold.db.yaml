@@ -1,0 +1,12 @@
+# Ephemeral DB primarily for local testing and development deployments.
+
+apiVersion: skaffold/v2beta29 
+kind: Config
+
+deploy:
+  helm:
+    releases:
+      - name: skaffold-init
+        namespace: skaffold-init-namespace
+        chartPath: deploy/helm/skaffold-init
+        createNamespace: true
