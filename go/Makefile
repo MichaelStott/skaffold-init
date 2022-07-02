@@ -1,6 +1,10 @@
 
 DEPLOY_ENV ?= local
 
+repo: ## Add required Helm chart repositories.
+	helm repo add bitnami https://charts.bitnami.com/bitnami
+	helm repo update
+
 cluster: ## Provision a local k8s cluster for development.
 	kind create cluster --name local-k8s
 

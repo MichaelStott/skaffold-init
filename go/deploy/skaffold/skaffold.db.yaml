@@ -6,7 +6,14 @@ kind: Config
 deploy:
   helm:
     releases:
-      - name: skaffold-init
+      - name: skaffold-init-db
         namespace: skaffold-init-namespace
-        chartPath: deploy/helm/skaffold-init
+        remoteChart: bitnami/postgresql
         createNamespace: true
+        version: 11.6.10
+        setValues:
+          postgresqlUsername: admin
+          postgresqlPassword: admin
+          postgresqlDatabase: polardb_catalog
+          image.tag: 12
+      
