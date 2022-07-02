@@ -1,0 +1,61 @@
+apiVersion: skaffold/v2beta29 
+kind: Config
+build:
+  local:
+    push: true
+    useDockerCLI: true
+  tagPolicy:
+    envTemplate:
+      template: "0.1.0"
+  artifacts:
+    - image: skaffold-init/go
+      context: .
+      docker:
+        dockerfile: container/Dockerfile
+deploy:
+  helm:
+    releases:
+      - name: skaffold-init
+        namespace: skaffold-init-namespace
+        chartPath: deploy/helm/skaffold-init
+        createNamespace: true
+profiles:
+  - name: "local"
+    activation:
+      - env: "DEPLOY_ENV=local"
+    portForward:
+    - resourceType: service
+      resourceName: skaffold-init
+      port: 80
+      localPort: 8080
+    build:
+      local:
+        push: false
+        useDockerCLI: true
+    deploy:
+      kubeContext: "kind-local-k8s"
+      helm:
+        releases:
+          - name: skaffold-init
+            namespace: skaffold-init-namespace
+            chartPath: deploy/helm/skaffold-init
+            createNamespace: true
+            artifactOverrides:
+              image: skaffold-init/go
+            imageStrategy:
+              helm: {}
+  - name: "dev"
+    activation:
+      - env: "DEPLOY_ENV=dev"
+    deploy:
+      kubeContext: "<dev-context-here>"
+  - name: "staging"
+    activation:
+      - env: "DEPLOY_ENV=staging"
+    deploy:
+      kubeContext: "<staging-context-here>"
+  - name: "production"
+    activation:
+      - env: "DEPLOY_ENV=production"
+    deploy:
+      kubeContext: "<production-context-here>"

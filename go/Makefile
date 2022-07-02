@@ -2,13 +2,13 @@
 DEPLOY_ENV?=local
 
 cluster: ## Provision a local k8s cluster for development.
-	kind create cluster --name kind-local
+	kind create cluster --name local-k8s
 
-buster: ## Provision a local k8s cluster for development.
-	kind delete cluster --name kind-local
+buster: ## Delete local cluster.
+	kind delete cluster --name local-k8s
 
 dev: ## Run application in dev mode.
-	skaffold dev -f skaffold/skaffold.yaml --port-forward
+	skaffold dev -p local -f deploy/skaffold/skaffold.yaml --port-forward
 
-deploy: ## Deploy app to target cluster.
-	skaffold run -f skaffold/skaffold.yaml
+run: ## Deploy app to target cluster.
+	skaffold run -f deploy/skaffold/skaffold.yaml
