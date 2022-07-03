@@ -12,8 +12,6 @@ deploy:
         createNamespace: true
         version: 11.6.10
         setValues:
-          postgresqlUsername: admin
-          postgresqlPassword: admin
-          postgresqlDatabase: polardb_catalog
-          image.tag: 12
-      
+          auth.username: skaffold
+          auth.password: password
+          auth.database: skaffold_init
