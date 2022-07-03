@@ -11,7 +11,6 @@ import (
 )
 
 func main() {
-	// urlExample := "postgres://username:password@localhost:5432/database_name"
 	conn, err := pgx.Connect(context.Background(), "postgres://skaffold:password@skaffold-init-db-postgresql:5432/skaffold_init")
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
